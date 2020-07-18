@@ -66,16 +66,16 @@ def geolocate(ip):
     postal = data['postal']
     timezone = data['timezone']
 
-    sys.exit(f'Successfully located IP: \n\n'
+    print(f'Successfully located IP: \n\n'
 
-             f'hostname: {hostname}\n'
-             f'organisation: {organisation}\n'
-             f'address: ({postal}) {city}, {region}, {country}\n'
-             f'coordinates: {location}\n'
-             f'timezone: {timezone}\n\n'
+          f'hostname: {hostname}\n'
+          f'organisation: {organisation}\n'
+          f'address: ({postal}) {city}, {region}, {country}\n'
+          f'coordinates: {location}\n'
+          f'timezone: {timezone}\n\n'
 
-             f'Please keep in mind that the coordinates do not show the exact location of {ip} but of {city}'
-             )
+          f'Please keep in mind that the coordinates do not show the exact location of {ip} but of {city}'
+          )
 
 
 def main():
