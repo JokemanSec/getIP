@@ -16,12 +16,12 @@ def help():
     sys.exit("\nUsage: "
              "\n         python3 getIP.py"
              "\n         python3 getIP.py [-s] [-g] [-i {target}]"
-             
+
              "\n\nOPTIONS:"
-             "\n         -h : shows this help dialog"
-             "\n         -s / --no-internet-check : skips the internet check; use it if your connection is slow"
-             "\n         -g / --geolocate : locate the found IP afterwards"
-             "\n         -i / --target : specifies the target; it can be a hostname or an IP")
+             "\n         -h | --help : shows this help dialog"
+             "\n         -s | --no-internet-check : skips the internet check; use it if your connection is slow"
+             "\n         -g | --geolocate : locate the found IP afterwards"
+             "\n         -i | --target : specifies the target; it can be a hostname or an IP")
 
 
 # check for internet connection
