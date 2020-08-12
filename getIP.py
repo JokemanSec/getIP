@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-# Creator: Jokeman
-import os, sys, socket, json
+import os, sys, socket, json, getopt
 from urllib.request import urlopen
 from urllib.error import URLError
 
@@ -16,8 +15,13 @@ print('#' * 5 + ' IP Finder by J0k3m4n ' + '#' * 5)
 def help():
     sys.exit("\nUsage: "
              "\n         python3 getIP.py"
-             "\n         python3 getIP.py [hostname]"
-             "\n")
+             "\n         python3 getIP.py [-s] [-g] [-i {target}]"
+             
+             "\n\nOPTIONS:"
+             "\n         -h : shows this help dialog"
+             "\n         -s / --no-internet-check : skips the internet check; use it if your connection is slow"
+             "\n         -g / --geolocate : locate the found IP afterwards"
+             "\n         -i / --target : specifies the target; it can be a hostname or an IP")
 
 
 # check for internet connection
@@ -28,24 +32,21 @@ def internet_check():
         return
     except URLError:
         sys.exit("\nPlease connect your device to the internet to use this script"
-                 "\nOr is your internet really that slow? oO")
+                 "\nOr is your response time > 10000ms? Then use -s to skip the internet check")
     except:
         sys.exit("\nSomething went wrong at our end, please start a issue # at "
                  "https://github.com/JokemanSec/getIP/issues")
 
 
 # get IP from hostname
-def get_ip():
+def get_ip(hostname):
     try:
-        ip = socket.gethostbyname(name)
+        ip = socket.gethostbyname(hostname)
         print(f'\nIP: {ip}')
-        geolocate(ip)
+        return ip
     except socket.gaierror:
         sys.exit("\n\033[91mError: wrong input, check \033[1mpython3 getIP.py -h")
-    except KeyError:
-        sys.exit("\nDid you enter a local ip address? If not please start a issue # at "
-                 "https://github.com/JokemanSec/getIP/issues")
-    except:
+    except:  # handle unexpected Exceptions
         sys.exit("\nSomething went wrong at our end, please start a issue # at "
                  "https://github.com/JokemanSec/getIP/issues")
 
@@ -78,24 +79,43 @@ def geolocate(ip):
           )
 
 
-def main():
-    internet_check()
+def main(argv):
+    opts, args = getopt.getopt(argv, shortopts="hsgi:", longopts=["help", "no-internet-check", "geolocate",
+                                                                  "hostname="])
+    # args is thrown away
+    inet_check = True
+    geo = False
+    hostname = None
 
-    global name
-    try:
-        name = sys.argv[1]
+    for opt, arg in opts:
+        if opt in ("-h", "--help"):
+            help()  # ends the script
+        elif opt in ("-s", "--no-internet-check"):
+            inet_check = False
+        elif opt in ("-g", "--geolocate"):
+            geo = True
+        elif opt in ("-i", "--hostname"):
+            hostname = arg
 
-        if name in ['--help', '-h']:
-            help()
-    except IndexError:
-        name = input('\nEnter an IP Address or Hostname: ')
+    if hostname is None:
+        hostname = input("Target: ")
 
-    get_ip()
+    if inet_check is True:
+        internet_check()
+
+    ip = get_ip(hostname)
+
+    if geo is True:
+        try:
+            geolocate(ip)
+        except KeyError:
+            sys.exit("\nDid you enter a local ip address? If not please start a issue # at "
+                     "https://github.com/JokemanSec/getIP/issues")
 
 
 # constructor
 if __name__ == '__main__':
     try:
-        main()
+        main(sys.argv[1:])
     except KeyboardInterrupt:
         sys.exit('\n\n\033[91muser exit: KeyboardInterrupt')
