@@ -1,16 +1,14 @@
 #!/usr/bin/env python3
-# Creator: J0K3M4N
 import os, sys, socket, json, getopt
 from urllib.request import urlopen
 from urllib.error import URLError
 
-
-def heading():
-    if sys.platform.startswith('linux'):
-        os.system('clear')
-    elif sys.platform == "win32":
-        os.system('cls')
-    print('#' * 5 + ' IP Finder by J0k3m4n ' + '#' * 5)
+# header
+if sys.platform == "linux" or sys.platform == "linux2":
+    os.system('clear')
+elif sys.platform == "win32":
+    os.system('cls')
+print('#' * 5 + ' IP Finder by J0k3m4n ' + '#' * 5)
 
 
 # help screen
@@ -82,8 +80,14 @@ def geolocate(ip):
 
 
 def main(argv):
-    opts, args = getopt.getopt(argv, shortopts="hsgi:", longopts=["help", "no-internet-check", "geolocate",
-                                                                  "hostname="])
+
+    try:
+        opts, args = getopt.getopt(argv, shortopts="hsgi:", longopts=["help", "no-internet-check", "geolocate",
+                                                                      "hostname="])
+    except getopt.GetoptError:
+        print('ERROR: option not found')
+        help()
+
     # args is thrown away
     inet_check = True
     geo = False
@@ -118,7 +122,6 @@ def main(argv):
 # constructor
 if __name__ == '__main__':
     try:
-        heading()
         main(sys.argv[1:])
     except KeyboardInterrupt:
         sys.exit('\n\n\033[91muser exit: KeyboardInterrupt')
