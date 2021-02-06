@@ -4,14 +4,15 @@ It works on both Linux and Windows.
 
         Usage:
                 python3 getIP.py
-                python3 getIP.py [-s] [-g] [-i {target}]
+                python3 getIP.py [-hsig] [-t {target}]
 
 
         Options:
-                -h : shows this help dialog
-                -s / --no-internet-check : skips the internet check; use it if your connection is slow
+                -h / --help : shows this help dialog
+                -s / --simple : returns the IP nothing else
+                -i / --no-internet-check : skips the internet check; use it if your connection is slow
                 -g / --geolocate : locate the found IP afterwards
-                -i / --target : specifies the target; it can be a hostname or an IP
+                -t / --target : specifies the target; it can be a hostname or an IP
 
 
         Requirements:
