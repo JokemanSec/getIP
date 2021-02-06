@@ -44,7 +44,6 @@ def internet_check():
 def get_ip(hostname):
     try:
         ip = socket.gethostbyname(hostname)
-        print(f'\nIP: {ip}')
         return ip
     except socket.gaierror:
         sys.exit("\n\033[91mError: wrong input, check \033[1mpython3 getIP.py -h")
@@ -111,7 +110,7 @@ def main(argv):
         hostname = input("Target: ")
 
     if simple is True:
-        return get_ip(hostname)
+        return print(get_ip(hostname))
 
     header()
 
@@ -119,6 +118,7 @@ def main(argv):
         internet_check()
 
     ip = get_ip(hostname)
+    print(f'\nIP: {ip}')
 
     if geo is True:
         try:
