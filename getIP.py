@@ -3,12 +3,13 @@ import os, sys, socket, json, getopt
 from urllib.request import urlopen
 from urllib.error import URLError
 
-# header
-if sys.platform == "linux" or sys.platform == "linux2":
-    os.system('clear')
-elif sys.platform == "win32":
-    os.system('cls')
-print('#' * 5 + ' IP Finder by J0k3m4n ' + '#' * 5)
+
+def header():
+    if sys.platform == "linux" or sys.platform == "linux2":
+        os.system('clear')
+    elif sys.platform == "win32":
+        os.system('cls')
+    print('#' * 5 + ' IP Finder by J0k3m4n ' + '#' * 5)
 
 
 # help screen
@@ -19,9 +20,10 @@ def help():
 
              "\n\nOPTIONS:"
              "\n         -h | --help : shows this help dialog"
-             "\n         -s | --no-internet-check : skips the internet check; use it if your connection is slow"
+             "\n         -s | --simple : returns the IP nothing else"
+             "\n         -i | --no-internet-check : skips the internet check; use it if your connection is slow"
              "\n         -g | --geolocate : locate the found IP afterwards"
-             "\n         -i | --target : specifies the target; it can be a hostname or an IP")
+             "\n         -t | --target : specifies the target; it can be a hostname or an IP")
 
 
 # check for internet connection
@@ -82,29 +84,36 @@ def geolocate(ip):
 def main(argv):
 
     try:
-        opts, args = getopt.getopt(argv, shortopts="hsgi:", longopts=["help", "no-internet-check", "geolocate",
-                                                                      "hostname="])
+        opts, args = getopt.getopt(argv, shortopts="hsigt:", longopts=["help", "simple", "no-internet-check",
+                                                                       "geolocate", "hostname="])
     except getopt.GetoptError:
         print('ERROR: option not found')
         help()
 
     # args is thrown away
     inet_check = True
-    geo = False
+    geo, simple = False, False
     hostname = None
 
     for opt, arg in opts:
         if opt in ("-h", "--help"):
             help()  # ends the script
-        elif opt in ("-s", "--no-internet-check"):
+        elif opt in ("-s", "--simple"):
+            simple = True
+        elif opt in ("-i", "--no-internet-check"):
             inet_check = False
         elif opt in ("-g", "--geolocate"):
             geo = True
-        elif opt in ("-i", "--hostname"):
+        elif opt in ("-t", "--hostname"):
             hostname = arg
 
     if hostname is None:
         hostname = input("Target: ")
+
+    if simple is True:
+        return get_ip(hostname)
+
+    header()
 
     if inet_check is True:
         internet_check()
