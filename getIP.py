@@ -16,11 +16,11 @@ def header():
 def help():
     sys.exit("\nUsage: "
              "\n         python3 getIP.py"
-             "\n         python3 getIP.py [-s] [-g] [-i {target}]"
+             "\n         python3 getIP.py [-hsig] [-t {target}]"
 
              "\n\nOPTIONS:"
              "\n         -h | --help : shows this help dialog"
-             "\n         -s | --simple : returns the IP nothing else"
+             "\n         -s | --simple : returns the IP and nothing else"
              "\n         -i | --no-internet-check : skips the internet check; use it if your connection is slow"
              "\n         -g | --geolocate : locate the found IP afterwards"
              "\n         -t | --target : specifies the target; it can be a hostname or an IP")
