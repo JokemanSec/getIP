@@ -9,7 +9,7 @@ It works on both Linux and Windows.
 
         Options:
                 -h / --help : shows this help dialog
-                -s / --simple : returns the IP nothing else
+                -s / --simple : returns the IP and nothing else
                 -i / --no-internet-check : skips the internet check; use it if your connection is slow
                 -g / --geolocate : locate the found IP afterwards
                 -t / --target : specifies the target; it can be a hostname or an IP
